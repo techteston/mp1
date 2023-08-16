@@ -42,7 +42,7 @@ def create_nodes(fd_data,fv_value_name,fv_value,fv_location,fv_color):
             color=fv_color,  # Circle color
             opacity=0.7,
         ),
-        text=fv_value_name+" " + fd_data[fv_location] + " " + fd_data[fv_value].astype(str),
+        text=fv_value_name+" at " + fd_data[fv_location] + ": " + fd_data[fv_value].astype(str),
     )
     return(nodes_trace)
 
@@ -139,12 +139,15 @@ layout = go.Layout(
     showlegend=False,
 )
 
+
 # Create the figure
 fig = go.Figure(data=[df_demand_nodes, df_capacity_nodes], layout=layout)
 
 # Streamlit app
-st.title('Current Demand and Capacity')
-st.plotly_chart(fig, width=800)
+st.subheader('Current Demand and Capacity')
+st.caption("The Demand and Capacity at each location is noted.")
+fig.update_layout(height=600)
+st.plotly_chart(fig,height=600)
 
 
 if st.button('Show Optimal Solution'):
@@ -267,8 +270,10 @@ if st.button('Show Optimal Solution'):
     fig2 = go.Figure(data=[df_demand_nodes,*dt_edges], layout=layout)
 
     # Streamlit app
-    st.title('Optimized Solution')
-    st.plotly_chart(fig2, width=800)
+    st.subheader('Optimized Solution')
+    st.caption("The Optimal Solution shows the optimal quantity of product to be delivered from Source to Destination")
+    fig2.update_layout(height=600)
+    st.plotly_chart(fig2, width=800,height=600)
 
 else:
     st.write('')
