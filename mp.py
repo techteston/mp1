@@ -8,7 +8,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from st_aggrid import AgGrid
+# from st_aggrid import AgGrid
 # In[4]:
 
 def bass_model(p, q, M, periods=1024):
@@ -100,10 +100,10 @@ with st.container():
         df
 
 df = pd.DataFrame({'col1': [1, 2, 3], 'col2': [4, 5, 6]})
-grid_return = AgGrid(df, editable=True)
-new_df = grid_return['data']
+# grid_return = AgGrid(df, editable=True)
+# new_df = grid_return['data']
 
-st.write("---")
+# st.write("---")
 
 
         
