@@ -26,8 +26,10 @@ data_locations = [
     {"Location": "Edinburgh", "Latitude": 55.9523, "Longitude": -3.1880},
     {"Location": "Glasgow", "Latitude": 55.8626, "Longitude": -4.2677}
 ]
-df_data_locations = pd.DataFrame(data_locations)
 
+# Create a dataframe from the list of dictionaries
+df_data_locations = pd.DataFrame(data_locations)
+df_data_locations
 with st.container():
     st.title('Transport Optimization')
     st.write("Optimize the Cost of Transportation to Deliver a Single Product")
@@ -46,10 +48,18 @@ with st.container():
             "Demand": [115,136,105,114,148,105,131,140,135,102]
         }
 
+        # Create a DataFrame
         df_demand_data = pd.DataFrame(demand_data)
+
+        # Pivot the DataFrame
         df_demand_data_pivoted = df_demand_data.pivot(index='Location', columns='Month-Year', values='Demand')
+
+        # Display the pivoted DataFrame
         df_demand_data_pivoted
+
         df_demand_location = pd.merge(df_demand_data,df_data_locations,on="Location",how="left")
+
+        df_demand_location
 
     with cap_col:
         st.write("---")
@@ -61,10 +71,19 @@ with st.container():
             "Month-Year": ["October-23","October-23","October-23","October-23"],
             "Capacity": [1361,1423,1015,1106]
         }
+
+        # Create a DataFrame
         df_capacity_data = pd.DataFrame(capacity_data)
+
+        # Pivot the DataFrame
         df_capacity_data_pivoted = df_capacity_data.pivot(index='Location', columns='Month-Year', values='Capacity')
+
+        # Display the pivoted DataFrame
         df_capacity_data_pivoted
+
         df_capacity_location = pd.merge(df_capacity_data,df_data_locations,on="Location",how="left")
+
+        df_capacity_location
 
     with cost_col:
         st.write("---")
@@ -78,13 +97,38 @@ with st.container():
             "Cost": [1,17,18,17,18,12,13,20,10,10,10,12,1,12,11,10,12,13,15,17,10,13,20,11,10,1,14,15,13,16,15,18,12,14,12,12,14,17,19,1]
         }
 
+        # Create a DataFrame
         df_cost_data = pd.DataFrame(cost_data)
+
+        # Pivot the DataFrame
         df_cost_data_pivoted = df_cost_data.pivot(index=['Source', 'Destination'], columns='Month-Year', values='Cost')
+        # Display the pivoted DataFrame
         df_cost_data_pivoted
 
         df_cost_location = pd.merge(df_cost_data,df_data_locations,left_on="Source",right_on="Location",how="left")
         df_cost_location = pd.merge(df_cost_location,df_data_locations,left_on="Destination",right_on="Location",how="left")
+
         df_cost_location.rename(columns={"Latitude_x":"Source_Latitude","Longitude_x":"Source_Longitude","Latitude_y":"Destination_Latitude","Longitude_y":"Destination_Longitude"},inplace="True")
+        df_cost_location
+
+df = pd.DataFrame(
+    [
+       {"command": "st.selectbox", "rating": 4, "is_widget": True},
+       {"command": "st.balloons", "rating": 5, "is_widget": False},
+       {"command": "st.time_input", "rating": 3, "is_widget": True},
+   ]
+)
+edited_df = st.data_editor(df, num_rows="dynamic")
+
+favorite_command = edited_df.loc[edited_df["rating"].idxmax()]["command"]
+st.markdown(f"Your favorite command is **{favorite_command}** 🎈")
+
+df2 = edited_df.copy()
+df2
+
+
+# st.write("---")
+
 
 
 dem_nodes_trace = go.Scattermapbox(
@@ -139,30 +183,8 @@ layout = go.Layout(
 fig = go.Figure(data=[dem_nodes_trace, cap_nodes_trace, *trav_edges_trace], layout=layout)
 
 # Streamlit app
-st.title('Current Demand, Capacty and Cost Data')
+st.title('Data Visualization with Plotly in Streamlit')
 st.plotly_chart(fig, use_container_width=True, width=600, height=2400)
-
-
-
-df = pd.DataFrame(
-    [
-       {"command": "st.selectbox", "rating": 4, "is_widget": True},
-       {"command": "st.balloons", "rating": 5, "is_widget": False},
-       {"command": "st.time_input", "rating": 3, "is_widget": True},
-   ]
-)
-edited_df = st.data_editor(df, num_rows="dynamic")
-
-favorite_command = edited_df.loc[edited_df["rating"].idxmax()]["command"]
-st.markdown(f"Your favorite command is **{favorite_command}** 🎈")
-
-df2 = edited_df.copy()
-df2
-
-
-# st.write("---")
-
-
 
 
 
