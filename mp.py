@@ -8,7 +8,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from streamlit-aggrid import AgGrid
+from st_aggrid import AgGrid
 # In[4]:
 
 def bass_model(p, q, M, periods=1024):
