@@ -103,6 +103,19 @@ df = pd.DataFrame({'col1': [1, 2, 3], 'col2': [4, 5, 6]})
 grid_return = AgGrid(df, editable=True)
 new_df = grid_return['data']
 
+df = pd.DataFrame(
+    [
+       {"command": "st.selectbox", "rating": 4, "is_widget": True},
+       {"command": "st.balloons", "rating": 5, "is_widget": False},
+       {"command": "st.time_input", "rating": 3, "is_widget": True},
+   ]
+)
+edited_df = st.data_editor(df, num_rows="dynamic")
+
+favorite_command = edited_df.loc[edited_df["rating"].idxmax()]["command"]
+st.markdown(f"Your favorite command is **{favorite_command}** 🎈")
+
+
 # st.write("---")
 
 
