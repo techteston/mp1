@@ -9,7 +9,7 @@ from pulp import *
 #import matplotlib.pyplot as plt
 #from st_aggrid import AgGrid
 
-st.set_page_config(page_title='Transport Optimization',page_icon=":tada:",layout="wide")
+st.set_page_config(page_title='Transport Optimization Changes2',page_icon=":tada:",layout="wide")
 
 def get_lat_lon(fd_data,fv_location):
 
