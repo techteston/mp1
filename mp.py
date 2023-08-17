@@ -9,7 +9,7 @@ from pulp import *
 #import matplotlib.pyplot as plt
 #from st_aggrid import AgGrid
 
-st.set_page_config(page_title='Transport Optimization Changes2',page_icon=":tada:",layout="wide")
+st.set_page_config(page_title='Transport Optimization',page_icon=":tada:",layout="wide")
 
 def get_lat_lon(fd_data,fv_location):
 
@@ -265,7 +265,8 @@ if st.button('Show Optimal Solution'):
                                     ,inplace="True")
     dt_edges = create_edges(df_sol_location,"Source","Source_Latitude","Source_Longitude",
                         "Destination","Destination_Latitude","Destination_Longitude","Value","Value","Red")
-    
+    df_sol_location2 = df_sol_location[["Source","Destination","Value"]]
+    df_sol_location2
     # Create the figure
     fig2 = go.Figure(data=[df_demand_nodes,*dt_edges], layout=layout)
 
